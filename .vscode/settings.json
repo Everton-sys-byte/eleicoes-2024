@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "eleicoes",
+            "database": "${workspaceFolder:Eleições 2024}/data/database.db"
+        }
+    ]
+}
