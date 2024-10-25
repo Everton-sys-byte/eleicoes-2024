@@ -1,5 +1,5 @@
 import os
-
+import pandas as pd
 # importando utils
 from utils import make_scatter, make_clusters
 
