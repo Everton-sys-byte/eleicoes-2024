@@ -1,1 +1,5 @@
-/data
+# Ignora tudo dentro da pasta data
+/data/*
+
+# Exceção para data_partidos.parquet
+!/data/data_partidos.parquet

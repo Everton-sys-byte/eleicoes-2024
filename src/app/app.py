@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import sqlalchemy
 
@@ -7,14 +8,19 @@ from utils import make_scatter, make_clusters
 # streamlit
 import streamlit as st
 
-engine = sqlalchemy.create_engine("sqlite:///../../data/database.db")
 
-with open("./etl_partidos.sql", 'r') as open_file:
-    query = open_file.read()
+prepare_path = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.dirname(prepare_path)
+base_path = os.path.dirname(src_path)
+data_path = os.path.join(base_path, "data")
 
-data = pd.read_sql(query, engine)
+# o arquivo data_partidos.parquet vai ser utilizado
+@st.cache_data(ttl=60*60*24)
+def create_df():
+    filename = os.path.join(data_path, "data_partidos.parquet")
+    return pd.read_parquet(filename)
 
-data.head()
+df = create_df()
 
 welcome = """ 
 # TSE Analytics - Eleições 2024
@@ -26,12 +32,12 @@ Análise de dados dos partidos que disputaram a eleição de 2024.
 st.markdown(welcome)
 
 # estados
-uf_options = data['SG_UF'].unique().tolist()
+uf_options = df['SG_UF'].unique().tolist()
 uf_options.remove("BR")
 uf_options = ["BR"] + uf_options
 
 # cargos
-cargos_options = data['DS_CARGO'].unique().tolist()
+cargos_options = df['DS_CARGO'].unique().tolist()
 cargos_options.sort()
 cargos_options.remove("GERAL")
 cargos_options = ["GERAL"]  + cargos_options
@@ -52,7 +58,7 @@ cluster = st.checkbox("Definir cluster?")
 if (cluster):
     n_clusters = st.number_input("Quantidade de clusters", value=6, format="%d", max_value=10, min_value=1)
 
-data = data[(data['SG_UF'] == selected_estado) & (data['DS_CARGO'] == selected_cargo)]
+data = df[(df['SG_UF'] == selected_estado) & (df['DS_CARGO'] == selected_cargo)]
 
 
 totalCandidaturas = data['totalCandidatos'].sum()
