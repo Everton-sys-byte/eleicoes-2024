@@ -6,7 +6,6 @@ from utils import make_scatter, make_clusters
 # streamlit
 import streamlit as st
 
-
 prepare_path = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.dirname(prepare_path)
 base_path = os.path.dirname(src_path)
