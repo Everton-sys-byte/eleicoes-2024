@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 import seaborn as sn
 from sklearn import cluster
 
-def make_scatter(data, cluster=False, size=False):
+def make_scatter(data, x, y, cluster=False, size=False):
 
     config = {
         "data":data, 
-        "x":"txGenFeminino", 
-        "y":"txCorRacaPreta",
+        "x":x, 
+        "y":y,
         "size":'totalCandidatos',
         "sizes":(5,300),
         "hue":'clusterBr',

@@ -65,6 +65,9 @@ st.markdown(f"Total de candidaturas: {totalCandidaturas}")
 if (cluster):
     data = make_clusters(data=data, n=n_clusters)
 
-fig = make_scatter(data=data, size=size, cluster=cluster)
+x = "txGenFeminino"
+y = "txCorRacaPreta"
+
+fig = make_scatter(data=data, x=x, y=y, size=size, cluster=cluster)
 
 st.pyplot(fig)
